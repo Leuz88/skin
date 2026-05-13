@@ -1,22 +1,13 @@
 import 'dart:async';
-import 'dart:isolate';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import '../models/scan_result.dart';
 
 enum DeviceStatus { disconnected, connected, scanning }
-
-/// Messaggio inviato dall'isolate HID verso il main thread
-class _HidMessage {
-  final bool connected;
-  final List<double>? scanData; // 8 scores se scan completato
-  _HidMessage({required this.connected, this.scanData});
-}
 
 class DeviceProvider extends ChangeNotifier {
   DeviceStatus _status = DeviceStatus.disconnected;
   String _statusMessage = 'Analizzatore non collegato';
-  bool _buttonPressed = false;
+  final bool _buttonPressed = false;
   Timer? _scanTimer;
   Timer? _pollTimer;
 

@@ -121,7 +121,7 @@ class _SkinGaugeState extends State<SkinGauge>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.12),
+                  color: color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -201,8 +201,8 @@ class _GaugePainter extends CustomPainter {
         ..shader = SweepGradient(
           startAngle: startAngle,
           endAngle: startAngle + sweepAngle,
-          colors: [paramColor.withOpacity(0.6), color],
-          transform: GradientRotation(startAngle),
+          colors: [paramColor.withValues(alpha: 0.6), color],
+          transform: const GradientRotation(startAngle),
         ).createShader(
             Rect.fromCircle(center: Offset(cx, cy), radius: radius));
 

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import '../models/scan_result.dart';
-import '../models/patient.dart';
 import '../providers/device_provider.dart';
 
 class ScanProvider extends ChangeNotifier {

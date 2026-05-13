@@ -72,11 +72,10 @@ class AppTheme {
         primary: primary,
         secondary: accent,
         surface: surface,
-        background: background,
       ),
       scaffoldBackgroundColor: background,
       textTheme: textTheme,
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surface,
         elevation: 0,
         shape: RoundedRectangleBorder(

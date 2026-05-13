@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
@@ -78,7 +77,7 @@ class _ScanAnimationState extends State<ScanAnimation>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppTheme.primary.withOpacity(0.5),
+                          color: AppTheme.primary.withValues(alpha: 0.5),
                           width: 2,
                         ),
                       ),
@@ -108,7 +107,7 @@ class _ScanAnimationState extends State<ScanAnimation>
                 boxShadow: widget.isActive
                     ? [
                         BoxShadow(
-                          color: AppTheme.primary.withOpacity(0.35),
+                          color: AppTheme.primary.withValues(alpha: 0.35),
                           blurRadius: 24,
                           spreadRadius: 4,
                         )

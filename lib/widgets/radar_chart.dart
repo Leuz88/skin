@@ -70,7 +70,7 @@ class _RadarPainter extends CustomPainter {
     final cy = size.height / 2;
     final r = (size.shortestSide / 2) - 30;
     const sides = 8;
-    final angleStep = 2 * pi / sides;
+    const angleStep = 2 * pi / sides;
     // Start from top, rotate -π/2
     double angle(int i) => -pi / 2 + i * angleStep;
 
@@ -88,8 +88,11 @@ class _RadarPainter extends CustomPainter {
       for (int i = 0; i < sides; i++) {
         final a = angle(i);
         final p = Offset(cx + ringR * cos(a), cy + ringR * sin(a));
-        if (i == 0) path.moveTo(p.dx, p.dy);
-        else path.lineTo(p.dx, p.dy);
+        if (i == 0) {
+          path.moveTo(p.dx, p.dy);
+        } else {
+          path.lineTo(p.dx, p.dy);
+        }
       }
       path.close();
       canvas.drawPath(path, ringPaint);
@@ -114,15 +117,18 @@ class _RadarPainter extends CustomPainter {
       final a = angle(i);
       final ratio = (scores[i] / 9.9).clamp(0.0, 1.0) * progress;
       final p = Offset(cx + r * ratio * cos(a), cy + r * ratio * sin(a));
-      if (i == 0) dataPath.moveTo(p.dx, p.dy);
-      else dataPath.lineTo(p.dx, p.dy);
+      if (i == 0) {
+        dataPath.moveTo(p.dx, p.dy);
+      } else {
+        dataPath.lineTo(p.dx, p.dy);
+      }
     }
     dataPath.close();
 
     canvas.drawPath(
       dataPath,
       Paint()
-        ..color = AppTheme.primary.withOpacity(0.15)
+        ..color = AppTheme.primary.withValues(alpha: 0.15)
         ..style = PaintingStyle.fill,
     );
     canvas.drawPath(

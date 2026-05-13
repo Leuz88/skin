@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -8,18 +6,14 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../models/scan_result.dart';
 import '../models/patient.dart';
-import '../theme/app_theme.dart';
-import 'package:flutter/material.dart' show Color;
 
 class ReportService {
   ReportService._();
   static final ReportService instance = ReportService._();
 
-  static PdfColor _pdfColor(Color c) =>
-      PdfColor(c.red / 255, c.green / 255, c.blue / 255);
-
-  static const _primaryPdf = PdfColor(0.082, 0.396, 0.753);   // #1565C0
-  static const _bgPdf = PdfColor(0.973, 0.98, 0.984);         // #F8FAFB
+  static const _primaryPdf = PdfColor(0.082, 0.396, 0.753); // #1565C0
+  static const _bgPdf = PdfColor(0.973, 0.98, 0.984);       // #F8FAFB
+  static const _white70Pdf = PdfColor(1, 1, 1, 0.7);
 
   Future<void> generateAndPrint(SkinResult result, Patient? patient) async {
     final doc = _buildDocument(result, patient);
@@ -116,9 +110,9 @@ class ReportService {
   pw.Widget _buildScoreBanner(SkinResult result) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
-      decoration: pw.BoxDecoration(
+      decoration: const pw.BoxDecoration(
         color: _primaryPdf,
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(8)),
+        borderRadius: pw.BorderRadius.all(pw.Radius.circular(8)),
       ),
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
@@ -127,7 +121,7 @@ class ReportService {
             children: [
               pw.Text('Punteggio Medio',
                   style: const pw.TextStyle(
-                      color: PdfColors.white70, fontSize: 10)),
+                      color: _white70Pdf, fontSize: 10)),
               pw.Text(result.averageScore.toStringAsFixed(1),
                   style: pw.TextStyle(
                       color: PdfColors.white,
@@ -137,7 +131,7 @@ class ReportService {
           ),
           pw.Text('/ 9.9',
               style: const pw.TextStyle(
-                  color: PdfColors.white70, fontSize: 14)),
+                  color: _white70Pdf, fontSize: 14)),
         ],
       ),
     );

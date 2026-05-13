@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
 import '../providers/device_provider.dart';
 
 class DeviceStatusBadge extends StatefulWidget {
@@ -53,9 +52,9 @@ class _DeviceStatusBadgeState extends State<DeviceStatusBadge>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: dotColor.withOpacity(0.08),
+        color: dotColor.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: dotColor.withOpacity(0.25)),
+        border: Border.all(color: dotColor.withValues(alpha: 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -72,7 +71,7 @@ class _DeviceStatusBadgeState extends State<DeviceStatusBadge>
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                        color: dotColor.withOpacity(0.4),
+                        color: dotColor.withValues(alpha: 0.4),
                         blurRadius: 4,
                         spreadRadius: 1)
                   ],

@@ -68,7 +68,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
                       return ListTile(
                         selected: isSelected,
                         selectedTileColor:
-                            AppTheme.primary.withOpacity(0.07),
+                            AppTheme.primary.withValues(alpha: 0.07),
                         leading: CircleAvatar(
                           backgroundColor: isSelected
                               ? AppTheme.primary
@@ -206,7 +206,7 @@ class _PatientDetail extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.white.withOpacity(0.2),
+                backgroundColor: Colors.white.withValues(alpha: 0.2),
                 child: Text(
                   patient.name[0].toUpperCase(),
                   style: const TextStyle(
@@ -260,7 +260,7 @@ class _PatientDetail extends StatelessWidget {
                         leading: CircleAvatar(
                           backgroundColor:
                               AppTheme.scoreColor(r.averageScore)
-                                  .withOpacity(0.15),
+                                  .withValues(alpha: 0.15),
                           child: Text(
                             r.averageScore.toStringAsFixed(1),
                             style: TextStyle(
@@ -348,7 +348,7 @@ class _PatientDialogState extends State<_PatientDialog> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<Sex>(
-                value: _sex,
+                initialValue: _sex,
                 decoration: const InputDecoration(
                     labelText: 'Sesso',
                     prefixIcon: Icon(Icons.wc)),

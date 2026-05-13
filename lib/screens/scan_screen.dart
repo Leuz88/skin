@@ -6,7 +6,6 @@ import '../providers/patient_provider.dart';
 import '../models/patient.dart';
 import '../theme/app_theme.dart';
 import '../widgets/scan_animation.dart';
-import '../widgets/device_status_badge.dart';
 import 'report_screen.dart';
 
 class ScanScreen extends StatefulWidget {
@@ -44,7 +43,7 @@ class _ScanScreenState extends State<ScanScreen> {
                 Text('Nuova Scansione',
                     style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: 4),
-                Text('Seleziona il paziente e avvia l\'analisi cutanea',
+                const Text('Seleziona il paziente e avvia l\'analisi cutanea',
                     style: TextStyle(
                         color: AppTheme.textSecondary, fontSize: 14)),
                 const SizedBox(height: 32),
@@ -62,7 +61,7 @@ class _ScanScreenState extends State<ScanScreen> {
                               letterSpacing: 0.8)),
                       const SizedBox(height: 10),
                       DropdownButtonFormField<Patient>(
-                        value: _selectedPatient,
+                        initialValue: _selectedPatient,
                         hint: const Text('Seleziona paziente…'),
                         isExpanded: true,
                         decoration: const InputDecoration(
@@ -119,7 +118,7 @@ class _ScanScreenState extends State<ScanScreen> {
                       ),
                       if (!device.isConnected) ...[
                         const SizedBox(height: 10),
-                        Text(
+                        const Text(
                           'Collega l\'analizzatore USB per abilitare la scansione.',
                           style: TextStyle(
                               color: AppTheme.textSecondary, fontSize: 12),
@@ -129,7 +128,7 @@ class _ScanScreenState extends State<ScanScreen> {
                       if (_selectedPatient == null &&
                           device.isConnected) ...[
                         const SizedBox(height: 10),
-                        Text(
+                        const Text(
                           'Seleziona un paziente per procedere.',
                           style: TextStyle(
                               color: AppTheme.textSecondary, fontSize: 12),
@@ -158,13 +157,13 @@ class _ScanScreenState extends State<ScanScreen> {
   Widget _buildLastResults(BuildContext context, ScanProvider scan) {
     final result = scan.currentResult;
     if (result == null) {
-      return Center(
+      return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.insert_chart_outlined,
                 size: 72, color: AppTheme.cardBorder),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text('Nessuna scansione disponibile',
                 style: TextStyle(color: AppTheme.textSecondary)),
           ],
@@ -210,7 +209,7 @@ class _ScanScreenState extends State<ScanScreen> {
         border: Border.all(color: AppTheme.cardBorder),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: const Offset(0, 2)),
         ],

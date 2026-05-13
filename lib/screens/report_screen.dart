@@ -4,9 +4,7 @@ import 'package:intl/intl.dart';
 import '../providers/scan_provider.dart';
 import '../providers/patient_provider.dart';
 import '../models/scan_result.dart';
-import '../models/patient.dart';
 import '../theme/app_theme.dart';
-import '../widgets/skin_gauge.dart';
 import '../widgets/radar_chart.dart';
 import '../widgets/parameter_card.dart';
 
@@ -85,7 +83,6 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  String? _selectedPatientId;
   SkinResult? _selectedResult;
 
   @override
@@ -115,7 +112,7 @@ class _ReportScreenState extends State<ReportScreen> {
             ],
           ),
           const SizedBox(height: 4),
-          Text('Visualizza e stampa i referti delle analisi cutanee',
+          const Text('Visualizza e stampa i referti delle analisi cutanee',
               style:
                   TextStyle(color: AppTheme.textSecondary, fontSize: 14)),
           const SizedBox(height: 24),
@@ -134,20 +131,20 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Widget _buildEmpty() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.description_outlined,
               size: 72, color: AppTheme.cardBorder),
-          const SizedBox(height: 16),
-          const Text('Nessun referto disponibile',
+          SizedBox(height: 16),
+          Text('Nessun referto disponibile',
               style: TextStyle(
                   color: AppTheme.textSecondary,
                   fontSize: 16,
                   fontWeight: FontWeight.w500)),
-          const SizedBox(height: 8),
-          const Text('Esegui prima una scansione nella sezione "Scansione"',
+          SizedBox(height: 8),
+          Text('Esegui prima una scansione nella sezione "Scansione"',
               style: TextStyle(color: AppTheme.textDisabled, fontSize: 13)),
         ],
       ),
@@ -156,7 +153,6 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Future<void> _exportPdf(
       BuildContext context, SkinResult result, PatientProvider pp) async {
-    final patient = pp.findById(result.patientId);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Generazione PDF in corso…')),
     );

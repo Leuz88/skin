@@ -5,8 +5,41 @@ import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
 
 /// VID e PID dell'analizzatore "Skin Observed System"
-const int kVendorId = 0x0AC8;   // Z-Star Microelectronics
+const int kVendorId = 0x0AC8; // Z-Star Microelectronics
 const int kProductId = 0x5678;
+
+// ── HIDD_ATTRIBUTES: non inclusa in win32 5.x, definita manualmente ─────────
+final class HIDD_ATTRIBUTES extends Struct {
+  @Uint32()
+  external int Size;
+  @Uint16()
+  external int VendorID;
+  @Uint16()
+  external int ProductID;
+  @Uint16()
+  external int VersionNumber;
+}
+
+// ── Caricamento diretto di hid.dll ──────────────────────────────────────────
+typedef _GetHidGuidNative = Void Function(Pointer<GUID> hidGuid);
+typedef _GetHidGuidDart = void Function(Pointer<GUID> hidGuid);
+
+typedef _GetAttributesNative = Int32 Function(
+    IntPtr device, Pointer<HIDD_ATTRIBUTES> attrs);
+typedef _GetAttributesDart = int Function(
+    int device, Pointer<HIDD_ATTRIBUTES> attrs);
+
+class _HidDll {
+  static final _lib = DynamicLibrary.open('hid.dll');
+
+  static final getHidGuid =
+      _lib.lookupFunction<_GetHidGuidNative, _GetHidGuidDart>(
+          'HidD_GetHidGuid');
+
+  static final getAttributes =
+      _lib.lookupFunction<_GetAttributesNative, _GetAttributesDart>(
+          'HidD_GetAttributes');
+}
 
 /// Risultato di una singola lettura HID: 8 valori raw dall'analizzatore
 class HidReadResult {
@@ -35,7 +68,7 @@ class HidService {
     _close();
 
     final hidGuid = calloc<GUID>();
-    HidD_GetHidGuid(hidGuid);
+    _HidDll.getHidGuid(hidGuid);
 
     // Ottieni handle al set di dispositivi HID attivi
     final deviceInfoSet = SetupDiGetClassDevs(
@@ -94,10 +127,10 @@ class HidService {
         );
 
         if (tempHandle != INVALID_HANDLE_VALUE) {
-          final attributes = calloc<HIDD_ATTRIBUTES>()
-            ..ref.Size = sizeOf<HIDD_ATTRIBUTES>();
+          final attributes = calloc<HIDD_ATTRIBUTES>();
+          attributes.ref.Size = sizeOf<HIDD_ATTRIBUTES>();
 
-          if (HidD_GetAttributes(tempHandle, attributes) != 0) {
+          if (_HidDll.getAttributes(tempHandle, attributes) != 0) {
             if (attributes.ref.VendorID == kVendorId &&
                 attributes.ref.ProductID == kProductId) {
               found = true;
@@ -159,7 +192,7 @@ class HidService {
         GetOverlappedResult(
             _deviceHandle, overlapped, bytesRead, FALSE);
         rawBytes = List.generate(
-            bytesRead.value, (i) => buffer.elementAt(i).value);
+            bytesRead.value, (i) => (buffer + i).value);
         success = true;
       }
     } finally {
