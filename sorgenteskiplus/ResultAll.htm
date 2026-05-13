@@ -1,0 +1,251 @@
+<html><head><meta http-equiv="Content-Type"; content="text/html; charset=iso-8859-1"><title></title>
+<STYLE>.title {color: #474747;  FONT-SIZE: 12px; FONT-FAMILY: "Microsoft YaHei UI" } .title2 {color: #474747;  FONT-SIZE: 26px; FONT-FAMILY: "Microsoft YaHei UI" } TD {color: #474747; FONT-SIZE: 9pt; FONT-FAMILY: "Microsoft YaHei UI" } .mytable { BORDER-RIGHT: #ffffff 0px; BORDER-TOP: #EBEBEB 1px solid; BORDER-LEFT: #EBEBEB 1px solid; BORDER-BOTTOM: #ffffff 0px } .mytd { BORDER-RIGHT: #EBEBEB 1px solid; BORDER-TOP: #ffffff 0px;  BORDER-LEFT: #ffffff 0px; BORDER-BOTTOM: #EBEBEB 1px solid; FONT-SIZE: 9pt;color: #474747;  }  .mytd2 { BORDER-RIGHT: #EBEBEB 1px solid; BORDER-TOP: #ffffff 0px;  BORDER-LEFT: #ffffff 0px; BORDER-BOTTOM: #EBEBEB 1px solid; FONT-SIZE: 10pt;color: #474747;}  </STYLE>
+</head><body topMargin=0 bottomMargin=0 leftMargin=5 rightmargin=5>
+<SCRIPT type='text/javascript' src='echarts.js'></SCRIPT>
+<TABLE cellSpacing=0 cellPadding=3 width=980 align=center border=0>
+<TR><TD width=60>&nbsp;</TD><TD width=400 class=title2><b>Rapporto Composito</b></TD><TD width=280 align=middle class=title><b>Nome: tiz</b></TD><TD width=240 align=middle class=title><b>Dattero: 13/05/2026 13:39</b></TD></TR></TABLE>
+<TABLE cellSpacing=0 cellPadding=3 width=980 align=center border=0>
+<TR><TD colspan=4><hr color='#ededed'></TD></TR>
+<TR><TD align=middle width=250><b>Misura</b></TD><TD align=middle width=300><b>Standard</b></TD><TD align=middle width=220><b>Il tuo risultato</b></TD><TD width=220 align=middle><b>Il tuo punteggio</b></TD></TR>
+<TR><TD colspan=4><hr color='#ededed'></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN01.png" ></TD>
+<TD>Grave secchezza: 0-11%<br/>Mancanza di umidità: 11-37%<br/>Pelle Derma secca: 37-56%<br/>Epidermide secca: 56-75%<br/>Umidità sufficiente: 75-100%</TD>
+<TD align=middle>Umidità sufficiente</TD>
+<TD align=middle><div id='R01' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN02.png" ></TD>
+<TD>Diminuzione di sebo: 0-13%<br/>Secrezione bilanciata: 13-37%<br/>Pelle grassa: 37-79%<br/>Secrezione eccessiva: 79-91%<br/>Vescica oleosa: 91-100%</TD>
+<TD align=middle>Pelle grassa</TD>
+<TD align=middle><div id='R02' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN03.png" ></TD>
+<TD>Pelle liscia: 0-12%<br/>Leggermente irregolare: 12-24%<br/>Pelle ruvida: 24-36%<br/>Consistenza irregolare: 36-66%<br/>Disturbo anomalo: 66-100%</TD>
+<TD align=middle>Leggermente irregolare</TD>
+<TD align=middle><div id='R03' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN04.png" ></TD>
+<TD>Collasso dismogeneo: 0-12%<br/>Rilassamneto di fibra: 12-26%<br/>Perdita seria: 26-43%<br/>Leggera perdita: 43-78%<br/>Abbastanza fibra: 78-100%</TD>
+<TD align=middle>Rilassamneto di fibra</TD>
+<TD align=middle><div id='R04' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN05.png" ></TD>
+<TD>Senza rughe: 0-12%<br/>Linee sottili: 12-24%<br/>Rughe sottili: 24-36%<br/>Ruga irregolare: 36-66%<br/>Ruga seria: 66-100%</TD>
+<TD align=middle>Rughe sottili</TD>
+<TD align=middle><div id='R05' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN06.png" ></TD>
+<TD>Pelle chiara: 0-16%<br/>Lieve macchia: 16-37%<br/>Macchie sull'epidermide: 37-68%<br/>Speckle sul derma: 68-90%<br/>Macchie: 90-100%</TD>
+<TD align=middle>Pelle chiara</TD>
+<TD align=middle><div id='R06' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN07.png" ></TD>
+<TD>Pelle normale: 0-16%<br/>Pelle sensibile: 16-37%<br/>Leggero arrossamento: 37-68%<br/>Pelle con couperose: 68-90%<br/>Macchie rosse: 90-100%</TD>
+<TD align=middle>Pelle normale</TD>
+<TD align=middle><div id='R07' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<TR><TD align=middle><img border=0 src="file:///C:\Program Files (x86)\Skin Observed System\Image\IconN08.png" ></TD>
+<TD>Pori normali: 0-8%<br/>Leggermente ossidato: 8-16%<br/>Ostruzione dei pori: 16-27%<br/>Presenza di punti neri: 27-56%<br/>Ostruzione dei pori: 56-100%</TD>
+<TD align=middle>Ostruzione dei pori</TD>
+<TD align=middle><div id='R08' style='height:100px; width:100px; margin:0px;'></div></TD></TR>
+<script type='text/javascript'>
+var dom = document.getElementById('R01');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '87%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 87,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 13,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R02');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '76%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 76,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 24,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R03');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '19%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 19,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 81,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R04');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '23%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 23,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 77,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R05');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '34%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 34,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 66,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R06');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '11%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 11,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 89,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R07');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '3%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 3,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 97,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+<script type='text/javascript'>
+var dom = document.getElementById('R08');
+var myChart = echarts.init(dom);
+var option = {
+title: {
+text: '99%',
+textStyle:{
+fontSize: 11,
+fontFamily:'Arial'
+},
+left: 'center',
+top: 'center'},
+animation: false,
+series: [{
+type: 'pie',
+radius: ['35%','70%'],
+labelLine: { show: false },
+data: [
+{value: 99,itemStyle:{normal: {color:'#3caca1'},emphasis: {color:'#3caca1'}}},
+{value: 1,itemStyle:{normal: {color:'#f8f8f8'},emphasis: {color:'#f8f8f8'}}}
+]
+}]
+};
+if (option && typeof option === 'object') {
+myChart.setOption(option, true);}
+</script>
+</body></html>

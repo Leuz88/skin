@@ -42,13 +42,10 @@ Il software originale (`C:\Program Files (x86)\Skin Observed System\Skin_Plus.ex
 ### 2.2 Come avviene la connessione al dispositivo
 
 Il dispositivo si identifica sul bus USB con:
-- **VendorID: `0x0AC8`** — Z-Star Microelectronics (produttore di webcam USB)
-- **ProductID: `0x5678`**
+- **VendorID: `0x0555`**
+- **ProductID: `0x0160`**
 
-Trovato tramite la stringa ASCII nel binario di `Skin_Plus.exe`:
-```
-@device:pnp:\\?\usb#vid_0ac8&pid_5678
-```
+Identificato tramite diagnostica HID (il vecchio `0x0AC8` / `0x5678` trovato nel binario non corrisponde all'hardware reale).
 
 Il dispositivo è **fisicamente una webcam USB** con un tasto/sensore touch integrato. Viene enumerato dal sistema operativo come **dispositivo HID** (Human Interface Device), esattamente come un mouse o tastiera, quindi non richiede driver particolari.
 
