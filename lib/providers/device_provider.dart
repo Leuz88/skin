@@ -1,7 +1,7 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import '../services/hid_service.dart';
+import '../services/device_service.dart';
 import '../services/camera_service.dart';
 
 enum DeviceStatus { disconnected, connected, scanning }
@@ -9,32 +9,26 @@ enum DeviceStatus { disconnected, connected, scanning }
 class DeviceProvider extends ChangeNotifier {
   DeviceStatus _status = DeviceStatus.disconnected;
   String _statusMessage = 'Analizzatore non collegato';
-  final bool _buttonPressed = false;
   Timer? _scanTimer;
   Timer? _pollTimer;
-  Timer? _buttonTimer;  // polling tasto fisico (100ms)
+  Timer? _buttonTimer;
 
-  // Simulated / real HID
-  bool _simulationMode = false;
   final _random = Random();
   Set<String> _knownDevicePaths = {};
 
+  final DeviceService _device = DeviceService.create();
+
   DeviceStatus get status => _status;
   String get statusMessage => _statusMessage;
-  bool get buttonPressed => _buttonPressed;
   bool get isConnected => _status != DeviceStatus.disconnected;
   bool get isScanning => _status == DeviceStatus.scanning;
 
-  // Callback chiamato da ScanProvider
   Function(List<double>)? onScanComplete;
 
   DeviceProvider() {
     _startPolling();
   }
 
-  // ─────────────────────────────────────────────
-  // POLLING per trovare il dispositivo
-  // ─────────────────────────────────────────────
   void _startPolling() {
     _pollTimer = Timer.periodic(const Duration(seconds: 2), (_) {
       _checkDevice();
@@ -44,43 +38,28 @@ class DeviceProvider extends ChangeNotifier {
   Future<void> _checkDevice() async {
     if (_status == DeviceStatus.scanning) return;
 
-    // Rileva variazioni HID (dispositivi aggiunti o rimossi)
-    final devices = HidService.instance.listAllDevices();
+    final devices = _device.listAllDevices();
     final currentPaths = devices.map((d) => d.path).toSet();
-
-    final added = currentPaths.difference(_knownDevicePaths);
+    final added   = currentPaths.difference(_knownDevicePaths);
     final removed = _knownDevicePaths.difference(currentPaths);
 
-    for (final path in added) {
-      final d = devices.firstWhere((x) => x.path == path);
-      debugPrint('[HID +ADDED]   $d');
-    }
-    for (final path in removed) {
-      debugPrint('[HID -REMOVED] $path');
-    }
-
+    for (final path in added)   debugPrint('[DEV +ADDED]   ${devices.firstWhere((x) => x.path == path)}');
+    for (final path in removed) debugPrint('[DEV -REMOVED] $path');
     if (_knownDevicePaths.isEmpty) {
-      debugPrint('=== HID BASELINE (${devices.length} devices) ===');
-      for (final d in devices) {
-        debugPrint('  $d');
-      }
+      debugPrint('=== DEVICES BASELINE (${devices.length}) ===');
+      for (final d in devices) debugPrint('  $d');
     }
-
     _knownDevicePaths = currentPaths;
 
     if (_status == DeviceStatus.disconnected) {
-      // Tenta di trovare e aprire il dispositivo HID
-      final found = HidService.instance.findAndOpen();
-      if (found) {
+      if (_device.findAndOpen()) {
         _status = DeviceStatus.connected;
         _statusMessage = 'Analizzatore connesso (VID:0555 PID:0160)';
         notifyListeners();
-        // Avvia polling del tasto fisico
         _startButtonPolling();
       }
     } else {
-      // Verifica che l'handle sia ancora valido
-      if (!HidService.instance.isOpen) {
+      if (!_device.isOpen) {
         _buttonTimer?.cancel();
         _status = DeviceStatus.disconnected;
         _statusMessage = 'Analizzatore non collegato';
@@ -89,46 +68,42 @@ class DeviceProvider extends ChangeNotifier {
     }
   }
 
-  // ─────────────────────────────────────────────
-  // POLLING TASTO FISICO (non-bloccante, 100ms)
-  // ─────────────────────────────────────────────
+  DateTime? _lastButtonPressTime;
+
   void _startButtonPolling() {
     _buttonTimer?.cancel();
-    _buttonTimer =
-        Timer.periodic(const Duration(milliseconds: 100), (_) async {
+    _lastButtonPressTime = null;
+    _buttonTimer = Timer.periodic(const Duration(milliseconds: 100), (_) async {
       if (_status != DeviceStatus.connected) return;
-      final pressed = HidService.instance.pollButtonPress();
-      if (pressed) {
-        debugPrint('[HID] Tasto fisico premuto → avvio scansione');
-        final bytes = await CameraService.instance.captureFrameBytes();
-        await triggerScanWithImage(bytes);
+      if (_device.pollButtonPress()) {
+        final now = DateTime.now();
+        if (_lastButtonPressTime == null ||
+            now.difference(_lastButtonPressTime!) >
+                const Duration(milliseconds: 1500)) {
+          _lastButtonPressTime = now;
+          debugPrint('[DEV] Tasto fisico premuto');
+          onPhysicalButtonPressed?.call();
+        } else {
+          debugPrint('[DEV] Tasto ignorato (debounce)');
+        }
       }
     });
   }
 
-  // ─────────────────────────────────────────────
-  // SCAN trigger da UI: riceve i byte dell'immagine
-  // catturata dalla ScanScreen
-  // ─────────────────────────────────────────────
+  /// Callback per il tasto fisico — usato dal ScanWizard
+  Function()? onPhysicalButtonPressed;
+
   Future<void> triggerScanWithImage(Uint8List? imageBytes) async {
     if (_status != DeviceStatus.connected) return;
     _status = DeviceStatus.scanning;
-    _statusMessage = 'Analisi in corso…';
+    _statusMessage = 'Analisi in corsoâ€¦';
     notifyListeners();
 
-    // 1. Accendi i LED
-    HidService.instance.ledOn();
-
-    // 2. Aspetta che i LED si stabilizzino e illuminino la pelle
+    _device.ledOn();
     await Future.delayed(const Duration(milliseconds: 600));
-
-    // 3. Scatta la foto con i LED accesi
     final capturedBytes = await CameraService.instance.captureFrameBytes();
+    _device.ledOff();
 
-    // 4. Spegni i LED
-    HidService.instance.ledOff();
-
-    // 5. Analizza l'immagine
     List<double> scores;
     final bytesToAnalyze = capturedBytes ?? imageBytes;
     if (bytesToAnalyze != null && bytesToAnalyze.isNotEmpty) {
@@ -144,26 +119,18 @@ class DeviceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<double> _generateSimulatedData() {
-    // Genera score realistici (tendenzialmente nella fascia 2-7)
-    return List.generate(8, (_) {
-      return double.parse(
-          (1.5 + _random.nextDouble() * 7.0).clamp(0.1, 9.9).toStringAsFixed(1));
-    });
-  }
+  DeviceService get deviceService => _device;
 
-  void enableSimulation(bool enabled) {
-    _simulationMode = enabled;
-    notifyListeners();
-  }
-
-  bool get simulationMode => _simulationMode;
+  List<double> _generateSimulatedData() =>
+      List.generate(8, (_) => double.parse(
+          (1.5 + _random.nextDouble() * 7.0).clamp(0.1, 9.9).toStringAsFixed(1)));
 
   @override
   void dispose() {
     _pollTimer?.cancel();
     _buttonTimer?.cancel();
     _scanTimer?.cancel();
+    _device.dispose();
     super.dispose();
   }
 }

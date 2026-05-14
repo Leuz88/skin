@@ -1,0 +1,20 @@
+﻿Analyzing skin...                                               
+
+   info - Statements in a for should be enclosed in a block - lib\providers\device_provider.dart:46:33 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\providers\device_provider.dart:47:33 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\providers\device_provider.dart:50:32 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\scan_wizard_screen.dart:270:30 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\scan_wizard_screen.dart:270:54 - curly_braces_in_flow_control_structures
+   info - Don't use 'BuildContext's across async gaps - lib\screens\scan_wizard_screen.dart:352:13 - use_build_context_synchronously
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\screens\scan_wizard_screen.dart:687:15 - deprecated_member_use
+   info - The import of 'package:sqflite/sqflite.dart' is unnecessary because all of the used elements are also provided by the import of 'package:sqflite_common_ffi/sqflite_ffi.dart' - lib\services\database_service.dart:5:8 - unnecessary_import
+   info - Statements in a for should be enclosed in a block - lib\services\device_service_windows.dart:189:62 - curly_braces_in_flow_control_structures
+
+flutter : 9 issues found. (ran in 3.3s)
+In riga:1 car:1
++ flutter analyze --no-fatal-infos 2>&1 | Out-File -Encoding utf8 analy ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (9 issues found. (ran in 3.3s):Str 
+   ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/device_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/device_status_badge.dart';
-import 'scan_screen.dart';
+import 'scan_wizard_screen.dart';
 import 'patients_screen.dart';
 import 'report_screen.dart';
 
@@ -19,9 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const _destinations = [
     NavigationRailDestination(
-      icon: Icon(Icons.radar_outlined),
-      selectedIcon: Icon(Icons.radar),
-      label: Text('Scansione'),
+      icon: Icon(Icons.biotech_outlined),
+      selectedIcon: Icon(Icons.biotech),
+      label: Text('Analisi'),
     ),
     NavigationRailDestination(
       icon: Icon(Icons.people_outline),
@@ -107,10 +107,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: IndexedStack(
               index: _selectedIndex,
-              children: const [
-                ScanScreen(),
-                PatientsScreen(),
-                ReportScreen(),
+              children: [
+                ScanWizardScreen(
+                  onNavigateToReports: () =>
+                      setState(() => _selectedIndex = 2),
+                ),
+                const PatientsScreen(),
+                const ReportScreen(),
               ],
             ),
           ),

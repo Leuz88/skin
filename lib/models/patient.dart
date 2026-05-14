@@ -69,4 +69,26 @@ class Patient {
       createdAt: createdAt,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'sex': sex.index,
+        'birthday': birthday?.toIso8601String(),
+        'telephone': telephone,
+        'email': email,
+        'remark': remark,
+        'created_at': createdAt.toIso8601String(),
+      };
+
+  factory Patient.fromMap(Map<String, dynamic> m) => Patient(
+        id: m['id'] as String,
+        name: m['name'] as String,
+        sex: Sex.values[m['sex'] as int? ?? 2],
+        birthday: m['birthday'] != null ? DateTime.parse(m['birthday'] as String) : null,
+        telephone: m['telephone'] as String? ?? '',
+        email: m['email'] as String? ?? '',
+        remark: m['remark'] as String? ?? '',
+        createdAt: DateTime.parse(m['created_at'] as String),
+      );
 }

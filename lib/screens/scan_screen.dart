@@ -85,7 +85,6 @@ class _ScanScreenState extends State<ScanScreen> {
                             .toList(),
                         onChanged: (p) {
                           setState(() => _selectedPatient = p);
-                          if (p != null) scan.selectPatient(p.id);
                         },
                       ),
                       const SizedBox(height: 12),

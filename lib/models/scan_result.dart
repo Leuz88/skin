@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:uuid/uuid.dart';
 
 const _uuid = Uuid();
@@ -81,6 +82,29 @@ class SkinResult {
         spotInfo: spotInfo,
         acneInfo: acneInfo,
       );
+
+  Map<String, dynamic> toMap() => {
+        'session_id': id,
+        'scores': jsonEncode(scores),
+        'result_nos': jsonEncode(resultNos),
+        'analyzed_at': measDate.toIso8601String(),
+      };
+
+  factory SkinResult.fromMap(Map<String, dynamic> m, {required String patientId}) {
+    final List<double> scores = (jsonDecode(m['scores'] as String) as List)
+        .map((e) => (e as num).toDouble())
+        .toList();
+    final List<int> resultNos = (jsonDecode(m['result_nos'] as String) as List)
+        .map((e) => (e as num).toInt())
+        .toList();
+    return SkinResult(
+      id: m['session_id'] as String,
+      measDate: DateTime.parse(m['analyzed_at'] as String),
+      patientId: patientId,
+      scores: scores,
+      resultNos: resultNos,
+    );
+  }
 }
 
 /// Ranges dalla tabella Result del DB originale

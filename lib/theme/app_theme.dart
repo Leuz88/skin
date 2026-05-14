@@ -31,6 +31,11 @@ class AppTheme {
   static const Color disconnected = Color(0xFFB71C1C);
   static const Color scanning = Color(0xFFF57F17);
 
+  // Dark / cyan theme (used in ScanWizard and dark panels)
+  static const Color backgroundDark = Color(0xFF0A0E1A);
+  static const Color surfaceDark    = Color(0xFF141928);
+  static const Color primaryCyan    = Color(0xFF00D4FF);
+
   // Parameter brand colors (for radar chart)
   static const List<Color> paramColors = [
     Color(0xFF1565C0), // Umidità
